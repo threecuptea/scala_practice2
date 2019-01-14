@@ -4,18 +4,19 @@
 
 
    1. Vowels group (Vowels, Vowels2, VowelIterate) 
+   
       I have 3 implements of algorithm: Swap vowels: swapping only vowels in a string. 
       Ex. "hello" =>  "holle", "academic" => "icedamac", "aei" => "iea" etc.
         
-       a) Vowels: this is foldRight solution and the most compact and clean version.  I don't need to reverse lookup (
-          a filtered vowel list) or the end result.                     
+       a) Vowels: this is foldRight solution and the most compact and clean version.  I don't need to reverse lookup (a
+          filtered vowel list) or the end result.                                        
           when the processed char is a consonant, just pre-pend it, otherwise consume and prepend one character 
           from the lookup to the result list.  Since we process original list in the reverse order in foldRight,
           I essentially inject vowels as needed in reverse order.          
           
        b) Vowels2: Martin Odersky mentioned in his "Functional Programming Principles in Scala" online Coursera course, 
           for comprehension and the combination of flatMap & filter are exchangeable.  Fold solution and recursive solution
-          are sometimes exchangeable too.            
+          are sometimes exchangeable too.                      
           However, fold has foldRight and foldLeft two options.  Efficient 
           recursive solution resorts to head and tail of Traversable trait.  It will process original list in order.  
           Therefore, I have to reverse filtered vowels to be a lookup to get swap vowels to work, 
@@ -30,7 +31,8 @@
           its initial value s.length -1 in each for-comprehension loop.  I will get wrong answer "hollo" for "hello". 
           A good lesson to understand the difference between traditional for/ while loop and Scala for-comprehensions. 
        
-   2. BoardGameSolver 
+   2. BoardGameSolver
+    
       The board game is 10 x 10 matrix bondary.  I cannot step out of the boundary.
       x dimension is vertical line and y dimension is horizontal line.  The followings represents the direction and
       x and y changes.
@@ -57,6 +59,7 @@
       can program in Scala way.
     
    3. Anagrams
+   
       This originated from "Functional Programming Principles in Scala" course week5 (forcomp) assignment. 
       No assignment solution was ever published.
       
@@ -76,6 +79,7 @@
       AnagramsFunSpec is the unit test class.
       
    4. Telecoder
+      
       '2' -> "ABC", '3' -> "DEF", '4' -> "GHI", '5' -> "JKL", '6' -> "MNO", '7' -> "PQRS", '8' -> "TUV", 
       '9' -> "WXYZ" shows the mappings between numeric code and characters on Telephone key pads.        
        
@@ -93,11 +97,13 @@
       
       TelecodeFlatSpec is the unit test class.  
       
-   5. MatrixBinarySearch          
+   5. MatrixBinarySearch
+               
       It is a binary search on multi-dimension Array with ascending double values. It uses loop function with start and
       end ndex parameters recursively. See codes for more in details.
    
    6. Miscellaneous worksheets
+      
       I draw materials either from "Functional Programming Principles in Scala" or from https://www.scala-exercises.org/
       
       a) list_fun.sc: my implementation of transpose, rotation (List(1,2,3,4); List(2,3,4,1),  identity matrix, 
