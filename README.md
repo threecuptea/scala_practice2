@@ -117,7 +117,9 @@
          
       d) excerpt2.sc: A combinations of MyNote: a mimic implementation of case class and its companion object with 
          apply and unapply methods; a sealed trait with multiple case object and a function pattern match 
-         those case objects; an implementation of Rational class which extends Ordered trait.     
+         those case objects; an implementation of Rational class which extends Ordered trait.
+         
+      
       
       
    

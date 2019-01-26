@@ -209,3 +209,18 @@ val fourth = new Rational(1, 4)
 val rationals = List(third, half, fourth)
 insertionSort(rationals)
 
+class FizzBuzz(mapping: List[(Int, String)]) {
+  def this(bindings: (Int, String)*) = this(bindings.toList)
+
+  def run(n: Int) = {
+    (for ((d, str) <- mapping if (n % d == 0)) yield str) match {
+      case Nil => n
+      case l: Seq[String] => l.mkString
+    }
+  }
+}
+
+val fizzBuzz = new FizzBuzz(3->"Fizz",5->"Buzz",7->"Tezz")
+(1 to 35).map(fizzBuzz.run)
+
+

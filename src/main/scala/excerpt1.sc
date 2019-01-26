@@ -48,6 +48,9 @@ lazy val primeSieve = sieve(Stream.from(2))
 (primeSieve take 100 toList)
 //lazy val will memorize what has been saved, It won't repeat the same process
 
+//I cannot use from(1000), otherwise head will start with 1000 and skip % 2, %3.  That's why I got 1000, 1001
+primeSieve.dropWhile(_ < 1000)(1)
+
 def isPrime2(n: Int): Boolean = {
   val stream = primeSieve.takeWhile(_ <= n)
   stream(stream.size -1) == n

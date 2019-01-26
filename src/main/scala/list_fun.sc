@@ -49,31 +49,20 @@ def identityMatrix(n: Int): Seq[Seq[Int]] = {
   (0 until n).map(i => List.fill(n)(0).updated(i, 1))
 }
 
-identityMatrix(4)
+identityMatrix(5)
 
-//Vector(Vector(1, 2, 3, 4, 5), Vector(2, 3, 4, 5, 1),
-//|  Vector(3, 4, 5, 1, 2), Vector(4, 5, 1, 2, 3), Vector(5, 1, 2, 3, 4))
-//base (1,2,3,4,5) The first list provide + num
-def rotation(n: Int): Seq[Seq[Int]] = {
-  (0 until n).map(i => (1 to n).map{ j =>
-    val k = i + j
-    if (k > n) k -n else k
-  })
+def rotate[T](xs: List[T]): List[List[T]] = {
+  def loop(ys: List[T], n: Int): List[List[T]] =
+    if (n == 0) Nil
+    else
+      ys :: loop(ys.tail ++ List(ys.head), n-1)
+  loop(xs, xs.length)
 }
 
-rotation(5)
+val nums = List(1,2,3,4,5)
+rotate(nums)
+rotate(List("Mon.", "Tues.", "Wed.", "Thur."))
 
-def rotation2(n: Int): Seq[Seq[Int]] = {
-  def helper(xs: List[Int], c: Int): List[List[Int]] = {
-    if (c == 0) Nil
-    else {
-      xs :: helper(xs.tail ++ List(xs.head), c -1)
-    }
-  }
-  helper((1 to n).toList, n)
-}
-
-rotation2(5)
 
 
 val matrix1 = List(List(1,2),List(3,4), List(5,6))
@@ -90,13 +79,6 @@ matrix3.transpose                               //> res32: List[List[Int]] = Lis
 //groupBy Map(1 -> List((2,1), (4,1),(6,1)
 //matrix1.flatMap(ls => ls.zipWithIndex).groupBy(_._2).toList.sortBy(_._1).map(_._2).map(ls => ls.map(_._1))
 
-def myTranspose(xs: List[List[Int]]) =
-  xs.flatMap(ls => ls.zipWithIndex).groupBy(_._2).toList.sortBy(_._1).map(_._2).map(ls => ls.map(_._1))
-
-myTranspose(matrix1)
-myTranspose(matrix2)
-myTranspose(matrix3)
-
 def groupByIndex[T](xs: List[(T, Int)]): List[List[(T, Int)]] = xs match {
   case Nil => Nil
   case x::xsl =>
@@ -104,34 +86,67 @@ def groupByIndex[T](xs: List[(T, Int)]): List[List[(T, Int)]] = xs match {
     fst::groupByIndex(snd)
 }
 
-def myTranspose2(xs: List[List[Int]]) =
-  groupByIndex(xs.flatMap(ls => ls.zipWithIndex)).map(ls => ls.map(_._1))
+def transpose[T](matrix: List[List[T]]): List[List[T]] =
+  groupByIndex(matrix.flatMap(l => l.zipWithIndex)).map(l => l.map(_._1))
 
-myTranspose2(matrix1)
+transpose(matrix1)
+transpose(matrix2)
+transpose(matrix3)
 
-List(1,2,3,4).combinations(2).toList
-List(1,2,3,4).permutations.toList
+val chars = List('a','b','c','d')
 
-val v1 = Vector(1,3,5)                          //> v1  : scala.collection.immutable.Vector[Int] = Vector(1, 3, 5)
-val v2 = Vector(2,4,6)
+def combinations2[T](xs: List[T]): List[List[T]] = {
+  val xsWithIndex = xs.zipWithIndex
+  xsWithIndex.flatMap{case (x, i) => xsWithIndex.filter{case (y, j) => j > i}.map{ case (y, j) => List(x, y)}}
+}
 
-def dotProduct(v1: Vector[Int], v2: Vector[Int]): Int =
-  (v1 zip v2).foldLeft(0) {(z, x) => z + x._1 * x._2}
+def combinations22[T](xs: List[T]): List[List[T]] = {
+  val idx = 0 until xs.size
+  (for {
+    i <- idx
+    j <- idx if j > i
+  } yield xs(i)::xs(j)::Nil).toList
+}
 
-dotProduct(v1, v2)
+combinations2(chars)
+combinations22(chars)
 
-class FizzBuzz(mapping: List[(Int, String)]) {
-  def this(bindings: (Int, String)*) = this(bindings.toList)
+def combinations3[T](xs: List[T]): List[List[T]] = {
+  val xsWithIndex = xs.zipWithIndex
+  xsWithIndex.flatMap{case (x, i) => xsWithIndex.filter{case (y, j) => j > i}.
+    flatMap{case (y, j) => xsWithIndex.filter{case(z, k) => k > j}.map{case(z, k) => List(x, y, z)}}}
+}
 
-  def run(n: Int) = {
-    (for ((d, str) <- mapping if (n % d == 0)) yield str) match {
-      case Nil => n
-      case l: Seq[String] => l.mkString
-    }
+def combinations32[T](xs: List[T]): List[List[T]] = {
+  val idx = 0 until xs.size
+  (for {
+    i <- idx
+    j <- idx if j > i
+    k <- idx if k > j
+  } yield xs(i)::xs(j)::xs(k)::Nil).toList
+}
+
+combinations3(chars)
+combinations32(chars)
+
+def combinations[T](xs: List[T], n: Int): List[List[T]] = {
+  if (n == 0 || xs.length == 0) {
+    List(List[T]())
+  }
+  else {
+    (for {
+      i <- (0 until xs.length)
+      rest <- combinations(xs.drop(i+1), n-1)
+    } yield xs(i)::rest).filterNot(ls => ls.length < n).toList
   }
 }
 
-val fizzBuzz = new FizzBuzz(3->"Fizz",5->"Buzz",7->"Tezz")
-(1 to 35).map(fizzBuzz.run)
+chars.combinations(2).toList
+combinations(chars, 2)
+chars.combinations(3).toList
+combinations(chars, 3)
+nums.combinations(3).toList
+combinations(nums, 3)
+
 
 
