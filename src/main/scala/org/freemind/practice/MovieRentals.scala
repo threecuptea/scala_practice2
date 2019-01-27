@@ -8,7 +8,7 @@ object MovieRentals {
   /**
     * PriceRule
     */
-  abstract trait PriceRule {
+  trait PriceRule {
     def totalAmount(daysRented: Int): Double
     def frequentPoint(daysRented: Int): Int = 1
   }

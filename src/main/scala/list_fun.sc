@@ -148,5 +148,52 @@ combinations(chars, 3)
 nums.combinations(3).toList
 combinations(nums, 3)
 
+type Word = String
+type Occurrences = List[(Char, Int)]
+
+/** Returns the list of all subsets of the occurrence list.
+  *  Example: the subsets of the occurrence list `List(('a', 2), ('b', 2))` are (order does not matter):
+  *  *
+  *    List(
+  *      List(),
+  *      List(('a', 1)),
+  *      List(('a', 2)),
+  *      List(('b', 1)),
+  *      List(('a', 1), ('b', 1)),
+  *      List(('a', 2), ('b', 1)),
+  *      List(('b', 2)),
+  *      List(('a', 1), ('b', 2)),
+  *      List(('a', 2), ('b', 2))
+  *    )
+  */
+def wordOccurrences(w: Word) =
+  w.toLowerCase.toList.groupBy(ch => ch).mapValues(_.length).toList.sortBy(_._1)
+
+val word = "Occurrences"
+wordOccurrences(word)
+
+def occu_combinations(occurrences: Occurrences): List[Occurrences] =
+  if (occurrences.isEmpty) List(List[(Char, Int)]())
+  else {
+    val (ch, cnt) = occurrences.head
+    (for {
+      i <- 0 to cnt
+      rest <- occu_combinations(occurrences.tail)
+    } yield (ch, i)::rest).toList.map(_.filterNot(_._2 == 0))
+  }
+
+val occur = List(('a', 2), ('b', 2))
+occu_combinations(occur)
+
+val a = List(('a',1), ('m',1), ('n',1))
+val b = List(('e',1), ('s',1), ('y',1))
+val c = List(('a',1), ('e',1), ('m',1), ('n',1), ('s',1), ('y',1))
+
+//Finish the next time.
+//def subtract(xs: Occurrences, ys: Occurrences): Occurrences = ???
+
+//def add(xs: Occurrences, ys: Occurrences): Occurrences = ???
+
+
 
 

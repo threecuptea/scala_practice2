@@ -101,14 +101,19 @@
                
       It is a binary search on multi-dimension Array with ascending double values. It uses loop function with start and
       end ndex parameters recursively. See codes for more in details.
+      
+   6. MovieRental 
+      Calculate movie rental charge and frequent points using PriceRule trait: with sub-class DailyCharge, including
+      case object NewRelease and case object Classic; with sub-class FixedPlusAddtl, including Regular, Children. It's
+      graceful solution.
    
-   6. Miscellaneous worksheets
+   7. Miscellaneous worksheets
       
       I draw materials either from "Functional Programming Principles in Scala" or from https://www.scala-exercises.org/
       
-      a) list_fun.sc: my implementation of transpose, rotation (List(1,2,3,4); List(2,3,4,1),  identity matrix, 
-      flatten(multiple nested layers), group using partition and pack using span and FizzBuzz. 
-      There are a lot of fun programs.          
+      a) list_fun.sc: my implementation of transpose, rotation (List(1,2,3,4); List(2,3,4,1) etc.),  identity matrix, 
+      flatten(multiple nested layers), group using partition and pack using span and FizzBuzz.  My implementation of
+      combinations of 2, combinations of 3 and combinations (flexible, any number).  There are a lot of fun programs.          
       
       b) sort.sc: InsertionSort and MergeSort Int and Generic type implementation using Ordering.
       
@@ -118,6 +123,8 @@
       d) excerpt2.sc: A combinations of MyNote: a mimic implementation of case class and its companion object with 
          apply and unapply methods; a sealed trait with multiple case object and a function pattern match 
          those case objects; an implementation of Rational class which extends Ordered trait.
+         
+      e) My implementations of foldLeft, foldRight, flatten, concat and reverse.
          
       
       
